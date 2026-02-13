@@ -67,29 +67,4 @@ if(OpenMP_CXX_FOUND AND NOT MSVC)
     target_link_libraries(proxTV PRIVATE OpenMP::OpenMP_CXX)
 endif()
 
-install(TARGETS proxTV EXPORT proxTVTargets
-    LIBRARY DESTINATION ${proxTV_INSTALL_LIB_DIR}
-    ARCHIVE DESTINATION ${proxTV_INSTALL_LIB_DIR}
-    RUNTIME DESTINATION ${proxTV_INSTALL_BIN_DIR}
-    INCLUDES DESTINATION ${proxTV_INSTALL_INCLUDE_DIR}
-    )
 
-# This saves as to develop a hacky FindproxTV for other to use the library.
-# A regular find_package(proxTV) will look for these targets.
-# It needs an extra proxTVConfig.cmake to handle dependencies (provided in cmake directory)
-install(EXPORT proxTVTargets
-    FILE proxTVTargets.cmake
-    NAMESPACE proxTV::
-    DESTINATION ${proxTV_INSTALL_CMAKE_DIR}
-    )
-
-# Generate and install proxTVConfigVersion.cmake
-include(CMakePackageConfigHelpers)
-write_basic_package_version_file("proxTVConfigVersion.cmake"
-    VERSION ${proxTV_VERSION}
-    COMPATIBILITY SameMajorVersion
-    )
-install(FILES
-    ${CMAKE_CURRENT_BINARY_DIR}/proxTVConfigVersion.cmake
-    DESTINATION ${proxTV_INSTALL_CMAKE_DIR}
-    )
