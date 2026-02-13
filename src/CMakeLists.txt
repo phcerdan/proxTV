@@ -58,7 +58,7 @@ if(proxTV_USE_LAPACK)
         ${LAPACKE_LIBRARIES}
         )
 else()
-    target_link_libraries(proxTV PUBLIC Eigen3::Eigen)
+    target_link_libraries(proxTV PUBLIC ${proxTV_Eigen_LIBRARIES})
 endif()
 
 # OpenMP
