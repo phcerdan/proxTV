@@ -29,23 +29,19 @@ set(sources
     )
 
 add_library(proxTV ${sources})
+target_sources(
+    proxTV
+  PUBLIC
+    FILE_SET HEADERS
+    FILES
+        ${headers}
+)
+
 set_target_properties(proxTV PROPERTIES WINDOWS_EXPORT_ALL_SYMBOLS 1)
 target_compile_definitions(proxTV PUBLIC NOMATLAB)
 if(proxTV_USE_LAPACK)
     target_compile_definitions(proxTV PUBLIC PROXTV_USE_LAPACK)
 endif()
-
-# Create directory with headers at build and install time.
-file(COPY ${headers}
-    DESTINATION "${CMAKE_CURRENT_BINARY_DIR}/include")
-install(FILES ${headers}
-    DESTINATION ${proxTV_INSTALL_INCLUDE_DIR})
-
-target_include_directories(proxTV PUBLIC
-    $<BUILD_INTERFACE:${CMAKE_CURRENT_BINARY_DIR}/include>
-    $<BUILD_INTERFACE:${CMAKE_CURRENT_SOURCE_DIR}>
-    $<INSTALL_INTERFACE:${proxTV_INSTALL_INCLUDE_DIR}>
-    )
 
 # Pthreads
 target_link_libraries(proxTV PUBLIC
